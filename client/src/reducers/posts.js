@@ -1,20 +1,31 @@
 //reducer is a function that accepts a state and also actions
 //then based on action type, you want to return action or state changed 
 
-import { CREATE, DELETE, FETCH_ALL, LIKE, UPDATE } from "../constants/actionTypes";
+import { CREATE, DELETE, FETCH_ALL, FETCH_BY_SEARCH, LIKE, START_LOADING, END_LOADING, UPDATE } from "../constants/actionTypes";
 
-export default (posts = [], action) => {
+export default (state = { isLoading: true, posts: [] }, action) => {
     switch (action.type) {
+        case START_LOADING:
+            return { ...state, isLoading: true };
+        case END_LOADING:
+            return { ...state, isLoading: false };
+        case FETCH_BY_SEARCH:
+            return { ...state, posts: action.payload };
         case FETCH_ALL:
-            return action.payload;
+            return {
+                ...state,
+                posts: action.payload.data,
+                currentPage: action.payload.currentPage,
+                numberOfPages: action.payload.numberOfPages,
+            };
         case CREATE:
-            return [...posts, action.payload];
+            return { ...state, posts: [...state.posts, action.payload] };
         case UPDATE:
         case LIKE:
-            return posts.map(p => p._id === action.payload._id ? action.payload : p);
-            case DELETE:
-                return posts.filter(p => p._id !== action.payload);
+            return { ...state, posts: state.posts.map(p => p._id === action.payload._id ? action.payload : p) };
+        case DELETE:
+            return { ...state, posts: state.posts.filter(p => p._id !== action.payload) };
         default:
-            return posts;
+            return state;
     }
 }

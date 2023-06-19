@@ -1,6 +1,6 @@
 //* means import everything from actions as api
 import * as api from '../api/index.js';
-import { CREATE, DELETE, FETCH_ALL, LIKE, UPDATE } from '../constants/actionTypes.js';
+import { CREATE, DELETE, FETCH_ALL, FETCH_BY_SEARCH, LIKE, START_LOADING, UPDATE, END_LOADING } from '../constants/actionTypes.js';
 
 //Action creators
 //Functions that returns an action, action is an object of type and payload
@@ -8,10 +8,25 @@ import { CREATE, DELETE, FETCH_ALL, LIKE, UPDATE } from '../constants/actionType
 //and instead of returning the action, we'll dispatch it
 
 //we're successfully using redux to actually pass or dispatch an action from the data from our backend
-export const getPosts = () => async (dispatch) => {
+export const getPosts = (page) => async (dispatch) => {
     try {
-        const { data } = await api.fetchPosts();
+        dispatch({ type: START_LOADING });
+        const { data } = await api.fetchPosts(page);
+
         dispatch({ type: FETCH_ALL, payload: data });
+        dispatch({ type: END_LOADING });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getPostsBySearch = (searchQuery) => async (dispatch) => {
+    try {
+        dispatch({ type: START_LOADING });
+        const { data: { data } } = await api.fetchPostsBySearch(searchQuery);
+
+        dispatch({ type: FETCH_BY_SEARCH, payload: data });
+        dispatch({ type: END_LOADING });
     } catch (error) {
         console.log(error);
     }
@@ -19,8 +34,11 @@ export const getPosts = () => async (dispatch) => {
 
 export const createPost = (body) => async (dispatch) => {
     try {
+        dispatch({ type: START_LOADING });
         const { data } = await api.createPost(body);
+
         dispatch({ type: CREATE, payload: data });
+        dispatch({ type: END_LOADING });
     } catch (error) {
         console.log(error);
     }

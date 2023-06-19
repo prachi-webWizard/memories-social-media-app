@@ -50,7 +50,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
     return (
         // div with whitish background
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={6}>
             <form autoComplete='off' noValidate className={`${classes.form} ${classes.root}`} onSubmit={handleSubmit}>
                 <Typography variant='h6'>{currentId ? 'Updating' : 'Creating'} a Memory</Typography>
                 <TextField name='title' variant='outlined' label='Title' fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
