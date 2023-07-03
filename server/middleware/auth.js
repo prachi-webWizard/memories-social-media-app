@@ -13,7 +13,7 @@ const auth = async (req, res, next) => {
 
         //we know which user is logged in and liking/deleting the posts
         if (token && isCustomToken) {
-            decodedData = jwt.verify(token, 'test');
+            decodedData = jwt.verify(token, 'xyz');
             req.userId = decodedData?.id;
         } else {
             //Google auth
