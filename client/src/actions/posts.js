@@ -1,6 +1,6 @@
 //* means import everything from actions as api
 import * as api from '../api/index.js';
-import { CREATE, DELETE, FETCH_ALL, FETCH_BY_SEARCH, LIKE, START_LOADING, UPDATE, END_LOADING, FETCH_POST } from '../constants/actionTypes.js';
+import { CREATE, DELETE, FETCH_ALL, FETCH_BY_SEARCH, LIKE, START_LOADING, UPDATE, END_LOADING, FETCH_POST, COMMENT } from '../constants/actionTypes.js';
 
 //Action creators
 //Functions that returns an action, action is an object of type and payload
@@ -81,6 +81,16 @@ export const likePost = (id) => async (dispatch) => {
     try {
         const { data } = await api.likePost(id);
         dispatch({ type: LIKE, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const commentPost = (comment, id) => async (dispatch) => {
+    try {
+        const { data } = await api.comment(comment, id);
+        dispatch({ type: COMMENT, payload: data });
+        return data.comments;
     } catch (error) {
         console.log(error);
     }
