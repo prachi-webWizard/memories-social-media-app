@@ -27,12 +27,12 @@ const Home = () => {
     const searchQuery = query.get('searchQuery');
 
     const searchPost = () => {
-        if (search.trim() || tags) {
+        if (search.trim() || tags.length > 0) {
              //dispatch -> fetch search posts
             dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
             history.push(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
         } else {
-            history.push('/');
+            history.push('/posts');
          }
     }
     
