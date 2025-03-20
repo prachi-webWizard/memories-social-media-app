@@ -3,3 +3,8 @@
 
 A simple social media app that allows users to post interesting events that happened in their lives.
 Tech stack: React, Redux, Node.js, MongoDB
+
+# Test account
+
+Username - john.smith@gmail.com
+Password - JohnS@123
