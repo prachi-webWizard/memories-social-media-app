@@ -8,3 +8,6 @@ Tech stack: React, Redux, Node.js, MongoDB
 
 Username - john.smith@gmail.com
 Password - JohnS@123
+
+Username - emmagreen@gmail.com
+Password - emma@123
